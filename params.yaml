@@ -1,0 +1,45 @@
+base:
+  project_name: Deep learning 
+
+raw_data:
+  data_src: datasets
+
+load_data:
+  num_classes: 4
+  raw_data: datasets
+  preprocessed_data: data/processed  # Updated to match test/train paths
+  full_path: VAC-DL/datasets
+
+train:
+  split_ratio: 0.8
+
+model: 
+  name: VGG19
+  trainable: True
+  train_path: data/processed/train
+  test_path: data/processed/test
+  image_size: [255, 255]  # Kept as a list, will convert to tuple in code
+  loss: "categorical_crossentropy"
+  optimizer: "adam"
+  metrics: ["accuracy"]
+  epochs: 10
+  batch_size: 32  # Uncommented for consistency
+  sav_dir: models/  # Corrected: Now represents a directory
+
+img_augment: 
+  rescale: 0.0039215686 
+  shear_range: 0.2
+  zoom_range: 0.2
+  horizontal_flip: True 
+  vertical_flip: True
+  batch_size: 32
+  class_mode: "categorical"
+  
+model_dir: models  # Keeping this for general model-related paths
+
+mlflow_config:
+  artifact_dir: artifacts 
+  experiment_name: DL_VGG19
+  run_name: DL
+  registered_model_name: DL_model
+  remote_server_uri: http://127.0.0.1:5000
